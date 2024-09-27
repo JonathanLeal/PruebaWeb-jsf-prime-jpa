@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Gestión de Productos</title>
+        <style>
+            body {
+                background-color: #f4f4f4; /* Fondo suave */
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .header {
+                background-color: #6200ea; /* Morado vibrante */
+                color: white;
+                padding: 20px;
+                text-align: center;
+                font-size: 28px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                font-weight: bold;
+                border-radius: 0 0 20px 20px;
+            }
+            .form-container {
+                background-color: white;
+                padding: 30px;
+                border-radius: 15px;
+                max-width: 1000px;
+                margin: 40px auto;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+            .form-title {
+                font-size: 22px;
+                color: #6200ea; /* Morado vibrante */
+                text-align: center;
+                margin-bottom: 30px;
+                font-weight: bold;
+            }
+            .input-field {
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #6200ea;
+                border-radius: 5px;
+                font-size: 16px;
+                margin-bottom: 15px;
+                transition: border-color 0.3s ease;
+            }
+            .input-field:focus {
+                outline: none;
+                border-color: #3700b3; /* Morado más oscuro */
+            }
+            .action-buttons {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .action-buttons .custom-btn {
+                background: linear-gradient(90deg, #03a9f4, #2196f3); /* Azul degradado */
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 12px 24px;
+                font-size: 16px;
+                transition: background-color 0.3s ease, transform 0.2s;
+                margin-right: 10px;
+                cursor: pointer;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            .action-buttons .custom-btn i {
+                margin-right: 8px;
+            }
+            .action-buttons .custom-btn:hover {
+                background: linear-gradient(90deg, #0288d1, #03a9f4);
+                transform: scale(1.05);
+            }
+            .clear-button {
+                background: linear-gradient(90deg, #ff5252, #e63946) !important; /* Rojo degradado */
+            }
+            .clear-button:hover {
+                background: linear-gradient(90deg, #e63946, #d32f2f) !important;
+            }
+            .data-table-header {
+                background-color: #6200ea; /* Morado vibrante */
+                color: white;
+                text-align: center;
+                font-weight: bold;
+            }
+            .center-content {
+                text-align: center;
+            }
+            .data-table {
+                width: 100%;
+                margin-top: 20px;
+            }
+            .data-table .small-btn {
+                background: linear-gradient(90deg, #ffeb3b, #ffc107); /* Amarillo degradado */
+                color: #333;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 12px;
+                font-size: 14px;
+                transition: background-color 0.3s ease, transform 0.2s;
+                margin-right: 5px;
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .data-table .small-btn:hover {
+                background: linear-gradient(90deg, #ffd600, #ffeb3b);
+                transform: scale(1.05);
+            }
+            .data-table .delete-btn {
+                background: linear-gradient(90deg, #f44336, #e53935);
+                color: white;
+                padding: 6px 12px;
+            }
+            .data-table .delete-btn:hover {
+                background: linear-gradient(90deg, #d32f2f, #c62828);
+                transform: scale(1.05);
+            }
+            
+            /* Estilos para el paginador */
+            .ui-paginator {
+                background-color: #6200ea; /* Morado vibrante */
+                border-radius: 20px;
+                padding: 5px;
+                text-align: center;
+                color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            .ui-paginator-page {
+                background-color: #03a9f4; /* Azul */
+                color: white;
+                border: none;
+                border-radius: 50%;
+                padding: 10px;
+                font-size: 14px;
+                margin: 0 5px;
+                transition: background-color 0.3s ease, transform 0.2s;
+            }
+            .ui-paginator-page:hover {
+                background-color: #0288d1; /* Azul más oscuro */
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+            .ui-paginator-current {
+                background-color: #ff5252 !important; /* Rojo brillante */
+                color: white !important;
+                border-radius: 50%;
+            }
+            /* Estilo del diálogo */
+        .beautiful-dialog {
+            border-radius: 20px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #f9f9f9, #e0e0e0);
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .dialog-panel-beautiful {
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dialog-message-beautiful {
+            font-size: 20px;
+            color: #424242; /* Gris elegante */
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        /* Botones en el diálogo */
+        .dialog-buttons-grid-beautiful {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .dialog-button-beautiful {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            margin: 0 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botón de eliminar con estilo vibrante */
+        .delete-button-beautiful {
+            background: linear-gradient(45deg, #ff5f6d, #ffc371); /* Degradado naranja/rojo */
+            color: white;
+        }
+
+        .delete-button-beautiful:hover {
+            background: linear-gradient(45deg, #ff3e4d, #ff9e57);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 100, 100, 0.3);
+        }
+
+        /* Botón de cancelar con estilo calmado */
+        .cancel-button-beautiful {
+            background: linear-gradient(45deg, #6dd5ed, #2193b0); /* Degradado azul/celeste */
+            color: white;
+        }
+
+        .cancel-button-beautiful:hover {
+            background: linear-gradient(45deg, #53a9c8, #186a80);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(100, 200, 255, 0.3);
+        }
+
+        /* Ajustes de los botones en pantallas pequeñas */
+        @media (max-width: 600px) {
+            .dialog-buttons-grid-beautiful {
+                display: block;
+                text-align: center;
+            }
+            .dialog-button-beautiful {
+                width: 100%;
+                margin: 10px auto;
+            }
+        }
+        </style>
+    </h:head>
+    <h:body>
+        <!-- Encabezado -->
+        <div class="header">
+            Gestión de Productos
+        </div>
+        
+        <!-- Formulario -->
+        <h:form id="form" class="form-container">
+            <p:growl id="msj" showDetail="true" />
+            
+            <h:outputText value="Ingrese la información del producto" styleClass="form-title" />
+            <h:panelGrid columns="3" cellpadding="10">
+                <p:inputText id="nombreProducto" placeholder="Nombre del Producto" 
+                            value="#{productoController.producto.nombre}" 
+                            styleClass="input-field">
+                   <!-- Evento AJAX para validar el nombre al perder el foco -->
+                   <p:ajax event="blur" listener="#{productoController.validarNombre()}" 
+                           update="form" />
+               </p:inputText>
+                <p:inputText placeholder="Precio" type="number" value="#{productoController.producto.precio}"
+                             styleClass="input-field"></p:inputText>
+                <p:inputText placeholder="Descripción" value="#{productoController.producto.descripcion}"
+                             styleClass="input-field"></p:inputText>
+            </h:panelGrid>
+
+            <!-- Botones de acción -->
+            <div class="action-buttons">
+                <p:commandButton value="Agregar Producto"
+                                action="#{productoController.agregarProducto()}"
+                                update="form"
+                                styleClass="custom-btn">
+                   <i class="pi pi-check"></i>
+               </p:commandButton>
+                <p:commandButton value="Limpiar Campos" styleClass="custom-btn clear-button">
+                    <i class="pi pi-times"></i>
+                </p:commandButton>
+            </div>
+
+            <!-- Tabla de productos -->
+            <p:dataTable id="tablaProductos" value="#{productoController.listarProductos()}" var="p" styleClass="data-table" paginator="true" rows="5" paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
+                <p:column headerText="ID" styleClass="data-table-header">
+                    <h:outputText value="#{p.id}" />
+                </p:column>
+                <p:column headerText="Nombre" styleClass="data-table-header">
+                    <h:outputText value="#{p.nombre}" />
+                </p:column>
+                <p:column headerText="Precio" styleClass="data-table-header">
+                    <h:outputText value="#{p.precio}" />
+                </p:column>
+                <p:column headerText="Descripción" styleClass="data-table-header">
+                    <h:outputText value="#{p.descripcion}" />
+                </p:column>
+                <p:column headerText="Acciones" styleClass="data-table-header">
+                    <div class="center-content">
+                        <p:commandButton value="Editar"
+                                         action="#{productoController.cargarProducto(p)}"
+                                         update=":form"
+                                         styleClass="small-btn">
+                            <i class="pi pi-pencil"></i>
+                        </p:commandButton>
+                        <p:commandButton value="Borrar" 
+                                         onclick="PF('dlgEliminar').show()"
+                                         action="#{productoController.seleccionarProductoEliminar(p)}"
+                                         update=":form:dlgEliminar-content"
+                                         styleClass="small-btn delete-btn">
+                            <i class="pi pi-trash"></i>
+                        </p:commandButton>
+                    </div>
+                </p:column>
+            </p:dataTable>
+            
+           <p:dialog modal="true" widgetVar="dlgEliminar" hideEffect="fade" showEffect="fade" header="Confirmación de Eliminación" styleClass="beautiful-dialog">
+                <p:panel id="dlgEliminar-content" styleClass="dialog-panel-beautiful">
+                    <p:outputLabel value="¿Seguro que quieres eliminar el producto: #{productoController.productoSeleccionado.nombre}?" styleClass="dialog-message-beautiful"></p:outputLabel>
+
+                    <h:panelGrid columns="2" styleClass="dialog-buttons-grid-beautiful">
+                        <p:commandButton value="Sí, eliminar" 
+                                         actionListener="#{productoController.eliminar}" 
+                                         onclick="PF('dlgEliminar').hide()"
+                                         update=":form:tablaProductos, :form:msj"
+                                         styleClass="dialog-button-beautiful delete-button-beautiful" />
+
+                        <p:commandButton value="No, cancelar" 
+                                         onclick="PF('dlgEliminar').hide()"
+                                         styleClass="dialog-button-beautiful cancel-button-beautiful" />
+                    </h:panelGrid>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
